@@ -9,6 +9,7 @@ const App: React.FC = (): JSX.Element => {
   const [apiResponse, setApiResponse] = useState<
     null | { address: string; name: string; phone_number: string }[]
   >(null);
+  const [allContacts,setAllContacts] = useState([])
 
   useEffect(() => {
     var fetchData = async () => {
@@ -16,6 +17,7 @@ const App: React.FC = (): JSX.Element => {
         "http://www.mocky.io/v2/581335f71000004204abaf83"
       );
       setApiResponse(response.data.contacts);
+      setAllContacts(response.data.contacts)
       console.log("reponse from api", response.data.contacts);
     };
 
@@ -23,10 +25,10 @@ const App: React.FC = (): JSX.Element => {
   }, []);
 
   const helperMethod = (): JSX.Element | undefined => {
-    if (apiResponse) {
-      console.log(apiResponse);
+    if (allContacts) {
+      console.log(allContacts);
       let jsxArray: any = [];
-      apiResponse.forEach(
+      allContacts.forEach(
         (
           element: { address: string; name: string; phone_number: string },
           id
@@ -36,7 +38,7 @@ const App: React.FC = (): JSX.Element => {
       );
       return jsxArray;
     } else {
-      return <div></div>;
+      return <div>Sorry, No Response from API</div>;
     }
   };
 
